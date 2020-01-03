@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  *
@@ -30,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 //@Table(name = "asndetails", catalog = "sltkeproc", schema = "")
 @Table(name = "asndetails", catalog = "sltk_eprocurment", schema = "")
-
+@JsonIgnoreProperties("inspection")
 @NamedQueries({
     @NamedQuery(name = "Asndetails.findAll", query = "SELECT a FROM Asndetails a"),
     @NamedQuery(name = "Asndetails.findByAsndetailid", query = "SELECT a FROM Asndetails a WHERE a.asndetailid = :asndetailid"),
@@ -63,7 +64,7 @@ public class Asndetails implements Serializable {
     @JsonBackReference
     @JoinColumn(name = "ponumber", referencedColumnName = "ponumber")
     @ManyToOne(optional = false)
-    private Poheader ponumber;
+    private Poheader poheaderasn;
 
     public Asndetails() {
     }
@@ -104,11 +105,11 @@ public class Asndetails implements Serializable {
 	public void setAsnid(Asnheader asnid) {
 		this.asnid = asnid;
 	}
-	public Poheader getPonumber() {
-		return ponumber;
+	public Poheader getPoheaderasn() {
+		return poheaderasn;
 	}
-	public void setPonumber(Poheader ponumber) {
-		this.ponumber = ponumber;
+	public void setPoheaderasn(Poheader poheaderasn) {
+		this.poheaderasn = poheaderasn;
 	}
 	
 	@Override

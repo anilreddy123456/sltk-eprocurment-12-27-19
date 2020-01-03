@@ -15,6 +15,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +30,10 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  *
  * @author DheerajSingh
@@ -36,7 +41,7 @@ import javax.validation.constraints.Size;
 @Entity
 //@Table(name = "invoices", catalog = "sltkeproc", schema = "")
 @Table(name = "invoices", catalog = "sltk_eprocurment", schema = "")
-
+@JsonIgnoreProperties("inspection")
 
 @NamedQueries({
     @NamedQuery(name = "Invoices.findAll", query = "SELECT i FROM Invoices i"),
@@ -107,9 +112,11 @@ public class Invoices implements Serializable {
     @Column(name = "remarks")
     private String remarks;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoiceid")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoiceid", fetch = FetchType.LAZY)
     private List<Invoicedetails> invoicedetailslist;
     
+    @JsonBackReference
     @JoinColumn(name = "comp_id", referencedColumnName = "comp_id")
     @ManyToOne
     private Company compid;

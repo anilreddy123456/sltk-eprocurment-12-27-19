@@ -83,10 +83,10 @@ public class PoheaderHelper implements Serializable {
     
     private String lastmodifieddate;
     
-    @JsonManagedReference
+   // @JsonManagedReference
 	 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ponumber", cascade = CascadeType.ALL)
-    private List<PolineitemsHelper> polineitemslisthelper;
+    private List<PolineitemsHelper> polineitemslist;
     
     
     public PoheaderHelper() {
@@ -208,12 +208,12 @@ public class PoheaderHelper implements Serializable {
         this.lastmodifieddate = lastmodifieddate;
     }
 
-    public List<PolineitemsHelper> getPolineitemslisthelper() {
-		return polineitemslisthelper;
+	public List<PolineitemsHelper> getPolineitemslist() {
+		return polineitemslist;
 	}
 
-	public void setPolineitemslisthelper(List<PolineitemsHelper> polineitemslisthelper) {
-		this.polineitemslisthelper = polineitemslisthelper;
+	public void setPolineitemslist(List<PolineitemsHelper> polineitemslist) {
+		this.polineitemslist = polineitemslist;
 	}
 
 	@Override
@@ -236,10 +236,23 @@ public class PoheaderHelper implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.javatechie.spring.mysql.api.model.Poheader[ ponumber=" + ponumber + " ]";
-    }
+	@Override
+	public String toString() {
+		return "PoheaderHelper [ponumber=" + ponumber + ", vendorsapcode=" + vendorsapcode + ", description="
+				+ description + ", potype=" + potype + ", purchaser=" + purchaser + ", duedate=" + duedate
+				+ ", netvalue=" + netvalue + ", taxvalue=" + taxvalue + ", grossvalue=" + grossvalue + ", currency="
+				+ currency + ", createdby=" + createdby + ", createddate=" + createddate + ", lastmodifiedby="
+				+ lastmodifiedby + ", lastmodifieddate=" + lastmodifieddate + ", polineitemslist=" + polineitemslist
+				+ "]";
+	}
+    
+    
+
+	/*
+	 * @Override public String toString() { return
+	 * "com.javatechie.spring.mysql.api.model.Poheader[ ponumber=" + ponumber +
+	 * " ]"; }
+	 */
     
 	/*
 	 * @JsonBackReference

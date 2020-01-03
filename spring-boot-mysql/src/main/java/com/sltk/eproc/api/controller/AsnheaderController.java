@@ -23,9 +23,13 @@ public class AsnheaderController {
 	@Autowired
 	private AsnheaderDao asnheaderDao;
 	
+	
 	@PostMapping("/save")
-	public void save(@Valid @RequestBody Asnheader asn) {
-		asnheaderDao.save(asn);
+	public void save(@Valid @RequestBody List<Asnheader> asn) {
+		asnheaderDao.saveAll(asn);
+		
+		// http://eccehp7.4vm.com:8073/sap/bc/zweb_asn
+		
 		System.out.println("ASN created sucessfully");
 	}
 	

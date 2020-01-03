@@ -22,14 +22,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  *
  * @author DheerajSingh
  */
 @Entity
-//@Table(name = "polineitems", catalog = "sltkeproc", schema = "")
-@Table(name = "polineitems", catalog = "sltk_eprocurment", schema = "")
+@Table(name = "polineitems", catalog = "sltkeproc", schema = "")
+//@Table(name = "polineitems", catalog = "sltk_eprocurment", schema = "")
+@JsonIgnoreProperties("inspection")
 @NamedQueries({
     @NamedQuery(name = "Polineitems.findAll", query = "SELECT p FROM Polineitems p"),
     @NamedQuery(name = "Polineitems.findByLineid", query = "SELECT p FROM Polineitems p WHERE p.lineid = :lineid"),

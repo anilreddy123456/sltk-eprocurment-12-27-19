@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  *
@@ -30,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 //@Table(name = "invoicedetails", catalog = "sltkeproc", schema = "")
 @Table(name = "invoicedetails", catalog = "sltk_eprocurment", schema = "")
-
+@JsonIgnoreProperties("inspection")
 @NamedQueries({
     @NamedQuery(name = "Invoicedetails.findAll", query = "SELECT i FROM Invoicedetails i"),
     @NamedQuery(name = "Invoicedetails.findByInvdetailid", query = "SELECT i FROM Invoicedetails i WHERE i.invdetailid = :invdetailid"),
@@ -66,7 +67,7 @@ public class Invoicedetails implements Serializable {
     @JsonBackReference
     @JoinColumn(name = "ponumber", referencedColumnName = "ponumber")
     @ManyToOne(optional = false)
-    private Poheader ponumber;
+    private Poheader ponumberinvoice;
 
     public Invoicedetails() {
     }
@@ -120,12 +121,12 @@ public class Invoicedetails implements Serializable {
         this.invoiceid = invoiceid;
     }
 
-    public Poheader getPonumber() {
-        return ponumber;
+    public Poheader getPonumberinvoice() {
+        return ponumberinvoice;
     }
 
-    public void setPonumber(Poheader ponumber) {
-        this.ponumber = ponumber;
+    public void setPonumberinvoice(Poheader ponumberinvoice) {
+        this.ponumberinvoice = ponumberinvoice;
     }
 
     @Override

@@ -14,6 +14,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,6 +25,9 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  *
  * @author DheerajSingh
@@ -31,7 +35,7 @@ import javax.validation.constraints.Size;
 @Entity
 //@Table(name = "grn", catalog = "sltkeproc", schema = "")
 @Table(name = "grn", catalog = "sltk_eprocurment", schema = "")
-
+@JsonIgnoreProperties("inspection")
 @NamedQueries({
     @NamedQuery(name = "Grn.findAll", query = "SELECT g FROM Grn g"),
     @NamedQuery(name = "Grn.findByGrnnumber", query = "SELECT g FROM Grn g WHERE g.grnnumber = :grnnumber"),
@@ -53,13 +57,17 @@ public class Grn implements Serializable {
     @Size(max = 250)
     @Column(name = "grn_created_by")
     private String grncreatedby;
+    
     @Column(name = "grn_created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date grncreateddate;
+    
     @Column(name = "grn_posting_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date grnpostingdate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grnnumber")
+    
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grnnumber",fetch = FetchType.LAZY)
     private List<Grndetails> grndetailslist;
 
     public Grn() {

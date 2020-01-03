@@ -29,6 +29,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -36,8 +38,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  * @author DheerajSingh
  */
 @Entity
-//@Table(name = "poheader", catalog = "sltkeproc", schema = "") 
-@Table(name = "poheader", catalog = "sltk_eprocurment", schema = "")
+@Table(name = "poheader", catalog = "sltkeproc", schema = "") 
+//@Table(name = "poheader", catalog = "sltk_eprocurment", schema = "")
+//@JsonIgnoreProperties("inspection")
 @NamedQueries({
     @NamedQuery(name = "Poheader.findAll", query = "SELECT p FROM Poheader p"),
     @NamedQuery(name = "Poheader.findByPonumber", query = "SELECT p FROM Poheader p WHERE p.ponumber = :ponumber"),
@@ -80,8 +83,8 @@ public class Poheader implements Serializable {
     private String purchaser;
     
     @Column(name = "duedate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date duedate;
+    //@Temporal(TemporalType.TIMESTAMP)
+    private String duedate;
     
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "net_value")
@@ -102,16 +105,16 @@ public class Poheader implements Serializable {
     private String createdby;
     
     @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createddate;
+   // @Temporal(TemporalType.TIMESTAMP)
+    private String createddate;
     
     @Size(max = 150)
     @Column(name = "last_modified_by")
     private String lastmodifiedby;
     
     @Column(name = "last_modified_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastmodifieddate;
+   // @Temporal(TemporalType.TIMESTAMP)
+    private String lastmodifieddate;
     
     @JsonBackReference
     @JoinColumn(name = "comp_id", referencedColumnName = "comp_id")
@@ -119,21 +122,25 @@ public class Poheader implements Serializable {
     private Company compid;
     
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ponumber")
-    private List<Invoicedetails> invoicedetailslist;
-    
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "poheader", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ponumber", cascade = CascadeType.ALL)
     private List<Polineitems> polineitemslist;
-    
-    @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ponumber")
-    private List<Asndetails> asndetailslist;
-    
-    @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ponumber")
-    private List<Asnheader> asnheaderlist;
 
+	
+	  @JsonManagedReference
+	  
+	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "ponumberinvoice",fetch =
+	  FetchType.LAZY) private List<Invoicedetails> invoicedetailslist;
+	  
+	  @JsonManagedReference
+	  
+	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "poheaderasn",fetch =
+	  FetchType.LAZY) private List<Asndetails> asndetailslist;
+	  
+	  @JsonManagedReference
+	  
+	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "poheader",fetch =
+	  FetchType.LAZY) private List<Asnheader> asnheaderlist;
+	 
     public Poheader() {
     }
 
@@ -181,11 +188,11 @@ public class Poheader implements Serializable {
         this.purchaser = purchaser;
     }
 
-    public Date getDuedate() {
+    public String getDuedate() {
         return duedate;
     }
 
-    public void setDuedate(Date duedate) {
+    public void setDuedate(String duedate) {
         this.duedate = duedate;
     }
 
@@ -229,11 +236,11 @@ public class Poheader implements Serializable {
         this.createdby = createdby;
     }
 
-    public Date getCreateddate() {
+    public String getCreateddate() {
         return createddate;
     }
 
-    public void setCreateddate(Date createddate) {
+    public void setCreateddate(String createddate) {
         this.createddate = createddate;
     }
 
@@ -245,11 +252,11 @@ public class Poheader implements Serializable {
         this.lastmodifiedby = lastmodifiedby;
     }
 
-    public Date getLastmodifieddate() {
+    public String getLastmodifieddate() {
         return lastmodifieddate;
     }
 
-    public void setLastmodifieddate(Date lastmodifieddate) {
+    public void setLastmodifieddate(String lastmodifieddate) {
         this.lastmodifieddate = lastmodifieddate;
     }
 
@@ -260,14 +267,7 @@ public class Poheader implements Serializable {
     public void setCompid(Company compid) {
         this.compid = compid;
     }
-
-    public List<Invoicedetails> getInvoicedetaislist() {
-        return invoicedetailslist;
-    }
-
-    public void setInvoicedetailslist(List<Invoicedetails> invoicedetailslist) {
-        this.invoicedetailslist = invoicedetailslist;
-    }
+    
 
     public List<Polineitems> getPolineitemslist() {
         return polineitemslist;
@@ -277,22 +277,24 @@ public class Poheader implements Serializable {
         this.polineitemslist = polineitemslist;
     }
 
-    public List<Asndetails> getAsndetailslist() {
-        return asndetailslist;
-    }
-
-    public void setAsndetailslist(List<Asndetails> asndetailslist) {
-        this.asndetailslist = asndetailslist;
-    }
-
-    public List<Asnheader> getAsnheaderlist() {
-        return asnheaderlist;
-    }
-
-    public void setAsnheaderlist(List<Asnheader> asnheaderlist) {
-        this.asnheaderlist = asnheaderlist;
-    }
-
+	/*
+	 * public List<Invoicedetails> getInvoicedetaislist() { return
+	 * invoicedetailslist; }
+	 * 
+	 * public void setInvoicedetailslist(List<Invoicedetails> invoicedetailslist) {
+	 * this.invoicedetailslist = invoicedetailslist; }
+	 * 
+	 * 
+	 * public List<Asndetails> getAsndetailslist() { return asndetailslist; }
+	 * 
+	 * public void setAsndetailslist(List<Asndetails> asndetailslist) {
+	 * this.asndetailslist = asndetailslist; }
+	 * 
+	 * public List<Asnheader> getAsnheaderlist() { return asnheaderlist; }
+	 * 
+	 * public void setAsnheaderlist(List<Asnheader> asnheaderlist) {
+	 * this.asnheaderlist = asnheaderlist; }
+	 */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -313,9 +315,21 @@ public class Poheader implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.javatechie.spring.mysql.api.model.Poheader[ ponumber=" + ponumber + " ]";
-    }
+	@Override
+	public String toString() {
+		return "Poheader [ponumber=" + ponumber + ", vendorsapcode=" + vendorsapcode + ", description=" + description
+				+ ", potype=" + potype + ", purchaser=" + purchaser + ", duedate=" + duedate + ", netvalue=" + netvalue
+				+ ", taxvalue=" + taxvalue + ", grossvalue=" + grossvalue + ", currency=" + currency + ", createdby="
+				+ createdby + ", createddate=" + createddate + ", lastmodifiedby=" + lastmodifiedby
+				+ ", lastmodifieddate=" + lastmodifieddate + ", compid=" + compid + " polineitemslist=" + polineitemslist + "]";
+	}
+    
+    
+
+	/*
+	 * @Override public String toString() { return
+	 * "com.javatechie.spring.mysql.api.model.Poheader[ ponumber=" + ponumber +
+	 * " ]"; }
+	 */
     
 }

@@ -72,7 +72,7 @@ public class PolineitemsHelper implements Serializable {
     
     private String previousasnqty;
     
-    @JsonBackReference
+    //@JsonBackReference
     @JoinColumn(name = "ponumber", referencedColumnName = "ponumber")
     @ManyToOne(optional = false)
     private PoheaderHelper ponumber;

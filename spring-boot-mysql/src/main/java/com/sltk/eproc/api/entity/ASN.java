@@ -1,10 +1,4 @@
-package com.sltk.eproc.api.model;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+package com.sltk.eproc.api.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -21,8 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -35,27 +27,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-/**
- *
- * @author DheerajSingh
- */
+
 @Entity
-//@Table(name = "asnheader", catalog = "sltkeproc", schema = "")
-@Table(name = "asnheader", catalog = "sltk_eprocurment", schema = "")
-@JsonIgnoreProperties("inspection")
-@NamedQueries({
-    @NamedQuery(name = "Asnheader.findAll", query = "SELECT a FROM Asnheader a"),
-    @NamedQuery(name = "Asnheader.findByAsnid", query = "SELECT a FROM Asnheader a WHERE a.asnid = :asnid"),
-    @NamedQuery(name = "Asnheader.findByAsnno", query = "SELECT a FROM Asnheader a WHERE a.asnno = :asnno"),
-    @NamedQuery(name = "Asnheader.findByAsncreatedate", query = "SELECT a FROM Asnheader a WHERE a.asncreatedate = :asncreatedate"),
-    @NamedQuery(name = "Asnheader.findByCustomername", query = "SELECT a FROM Asnheader a WHERE a.customername = :customername"),
-    @NamedQuery(name = "Asnheader.findByDeliverydate", query = "SELECT a FROM Asnheader a WHERE a.deliverydate = :deliverydate"),
-    @NamedQuery(name = "Asnheader.findByModeOftransport", query = "SELECT a FROM Asnheader a WHERE a.modeoftransport = :modeoftransport"),
-    @NamedQuery(name = "Asnheader.findByShippingdate", query = "SELECT a FROM Asnheader a WHERE a.shippingdate = :shippingdate"),
-    @NamedQuery(name = "Asnheader.findByAsnstatus", query = "SELECT a FROM Asnheader a WHERE a.asnstatus = :asnstatus"),
-    @NamedQuery(name = "Asnheader.findByTransportcode", query = "SELECT a FROM Asnheader a WHERE a.transportcode = :transportcode"),
-    @NamedQuery(name = "Asnheader.findByShippingsddress", query = "SELECT a FROM Asnheader a WHERE a.shippingaddress = :shippingaddress")})
-public class Asnheader implements Serializable {
+@Table(name="asnheader")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class ASN implements Serializable{
 
     private static final long serialVersionUID = 1L;
     
@@ -102,15 +78,15 @@ public class Asnheader implements Serializable {
     @Column(name = "shipping_address")
     private String shippingaddress;
     
-    @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asnid",fetch = FetchType.LAZY)
-    private List<Asndetails> asndetailslist;
     
-    @JsonBackReference
-    @JoinColumn(name = "ponumber", referencedColumnName = "ponumber")
-    @ManyToOne(optional = false)
-    private Poheader poheader;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asn_id")
+    private List<AsnDetails> asndetailslist;
+	
+   // @JsonBackReference
+	@ManyToOne(cascade = CascadeType.ALL,  optional = false)
+	@JoinColumn(name = "ponumber")
+	private Poheader poheader;
+	
 	@Transient
 	private List<Integer> selectedlineitem; 
 	
@@ -125,20 +101,7 @@ public class Asnheader implements Serializable {
 	
 	@Transient
 	private String shippingdatestring;
-    
-    public Asnheader() {
-    }
 
-    public Asnheader(Integer asnid) {
-        this.asnid = asnid;
-    }
-
-    public Asnheader(Integer asnid, String asnno) {
-        this.asnid = asnid;
-        this.asnno = asnno;
-    }
-
-    
 	public Integer getAsnid() {
 		return asnid;
 	}
@@ -219,11 +182,11 @@ public class Asnheader implements Serializable {
 		this.shippingaddress = shippingaddress;
 	}
 
-	public List<Asndetails> getAsndetailslist() {
+	public List<AsnDetails> getAsndetailslist() {
 		return asndetailslist;
 	}
 
-	public void setAsndetailslist(List<Asndetails> asndetailslist) {
+	public void setAsndetailslist(List<AsnDetails> asndetailslist) {
 		this.asndetailslist = asndetailslist;
 	}
 
@@ -276,28 +239,38 @@ public class Asnheader implements Serializable {
 	}
 
 	@Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (asnid != null ? asnid.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Asnheader)) {
-            return false;
-        }
-        Asnheader other = (Asnheader) object;
-        if ((this.asnid == null && other.asnid != null) || (this.asnid != null && !this.asnid.equals(other.asnid))) {
-            return false;
-        }
-        return true;
-    }
-
+	public String toString() {
+		return "ASN [asnid=" + asnid + ", asnno=" + asnno + ", asncreatedate=" + asncreatedate + ", customername="
+				+ customername + ", deliverydate=" + deliverydate + ", modeoftransport=" + modeoftransport
+				+ ", shippingdate=" + shippingdate + ", asnstatus=" + asnstatus + ", transportcode=" + transportcode
+				+ ", shippingaddress=" + shippingaddress + ", asndetailslist=" + asndetailslist + ", poheader=" + poheader
+				+ ", selectedlineitem=" + selectedlineitem + ", selectedasnqty=" + selectedasnqty
+				+ ", asncreatedatestring=" + asncreatedatestring + ", deliverydatestring=" + deliverydatestring
+				+ ", shippingdatestring=" + shippingdatestring + "]";
+	}
 	
-	  @Override public String toString() { return
-	  "com.javatechie.spring.mysql.api.model.Asnheader[ asnid=" + asnid + " ]"; }
-	 
-    
+	
+	
+	
+	
 }
+
+/*
+ * @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional =
+ * false)
+ * 
+ * @JoinColumn(name = "line_item_id") private POItem poItem;
+ * 
+ * @ManyToOne(fetch = FetchType.LAZY)
+ * 
+ * @JoinColumn(name = "material_type", referencedColumnName = "material_type")
+ * private POItem po_mat_type ;
+ * 
+ * @ManyToOne(fetch = FetchType.LAZY)
+ * 
+ * @JoinColumn(name = "asn_quantity", referencedColumnName =
+ * "balance_asn_quantity") private POItem po_asn_quantity;
+ */
+
+
+
