@@ -59,7 +59,7 @@ public class Company implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @JsonManagedReference
+ 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

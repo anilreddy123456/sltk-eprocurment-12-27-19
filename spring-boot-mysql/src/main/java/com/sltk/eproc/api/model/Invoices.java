@@ -41,7 +41,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 //@Table(name = "invoices", catalog = "sltkeproc", schema = "")
 @Table(name = "invoices", catalog = "sltk_eprocurment", schema = "")
-@JsonIgnoreProperties("inspection")
+
 
 @NamedQueries({
     @NamedQuery(name = "Invoices.findAll", query = "SELECT i FROM Invoices i"),
@@ -112,11 +112,11 @@ public class Invoices implements Serializable {
     @Column(name = "remarks")
     private String remarks;
     
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoiceid", fetch = FetchType.LAZY)
     private List<Invoicedetails> invoicedetailslist;
     
-    @JsonBackReference
+  
     @JoinColumn(name = "comp_id", referencedColumnName = "comp_id")
     @ManyToOne
     private Company compid;

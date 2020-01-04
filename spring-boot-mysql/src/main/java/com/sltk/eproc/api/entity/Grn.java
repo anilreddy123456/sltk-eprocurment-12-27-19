@@ -47,7 +47,7 @@ public class Grn implements Serializable {
 	   // @Temporal(TemporalType.TIMESTAMP)
 	    private String grnpostingdate;
 	    
-	    @JsonManagedReference
+
 	    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grnnumber",fetch = FetchType.LAZY)
 	    private List<Grndetails> grndetailslist;
 

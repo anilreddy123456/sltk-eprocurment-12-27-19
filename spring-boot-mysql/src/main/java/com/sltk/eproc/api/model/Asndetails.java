@@ -29,9 +29,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author DheerajSingh
  */
 @Entity
-//@Table(name = "asndetails", catalog = "sltkeproc", schema = "")
-@Table(name = "asndetails", catalog = "sltk_eprocurment", schema = "")
-@JsonIgnoreProperties("inspection")
+@Table(name = "asndetails", catalog = "sltkeproc", schema = "")
+//@Table(name = "asndetails", catalog = "sltk_eprocurment", schema = "")
+
 @NamedQueries({
     @NamedQuery(name = "Asndetails.findAll", query = "SELECT a FROM Asndetails a"),
     @NamedQuery(name = "Asndetails.findByAsndetailid", query = "SELECT a FROM Asndetails a WHERE a.asndetailid = :asndetailid"),
@@ -56,12 +56,12 @@ public class Asndetails implements Serializable {
     @Column(name = "asn_quantity")
     private BigDecimal asnquantity;
     
-    @JsonBackReference
+ 
     @JoinColumn(name = "asn_id", referencedColumnName = "asn_id")
     @ManyToOne
     private Asnheader asnid;
     
-    @JsonBackReference
+    
     @JoinColumn(name = "ponumber", referencedColumnName = "ponumber")
     @ManyToOne(optional = false)
     private Poheader poheaderasn;

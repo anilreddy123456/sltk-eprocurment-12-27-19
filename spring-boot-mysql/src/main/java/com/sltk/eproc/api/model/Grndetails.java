@@ -30,9 +30,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author DheerajSingh
  */
 @Entity
-//@Table(name = "grndetails", catalog = "sltkeproc", schema = "")
-@Table(name = "grndetails", catalog = "sltk_eprocurment", schema = "")
-@JsonIgnoreProperties("inspection")
+@Table(name = "grndetails", catalog = "sltkeproc", schema = "")
+//@Table(name = "grndetails", catalog = "sltk_eprocurment", schema = "")
+
 @NamedQueries({
     @NamedQuery(name = "Grndetails.findAll", query = "SELECT g FROM Grndetails g"),
     @NamedQuery(name = "Grndetails.findByGrndetailid", query = "SELECT g FROM Grndetails g WHERE g.grndetailid = :grndetailid"),
@@ -70,7 +70,7 @@ public class Grndetails implements Serializable {
     @Column(name = "bill_of_lading")
     private String billoflading;
     
-    @JsonBackReference
+    
     @JoinColumn(name = "grn_number", referencedColumnName = "grn_number")
     @ManyToOne(optional = false)
     private Grn grnnumber;

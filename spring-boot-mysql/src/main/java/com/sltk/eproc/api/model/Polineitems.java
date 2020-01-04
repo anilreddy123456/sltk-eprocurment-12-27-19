@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "polineitems", catalog = "sltkeproc", schema = "")
 //@Table(name = "polineitems", catalog = "sltk_eprocurment", schema = "")
-@JsonIgnoreProperties("inspection")
+
 @NamedQueries({
     @NamedQuery(name = "Polineitems.findAll", query = "SELECT p FROM Polineitems p"),
     @NamedQuery(name = "Polineitems.findByLineid", query = "SELECT p FROM Polineitems p WHERE p.lineid = :lineid"),
@@ -107,7 +107,7 @@ public class Polineitems implements Serializable {
     @Column(name = "previous_asn_qty")
     private BigDecimal previousasnqty;
     
-    @JsonBackReference
+   
     @JoinColumn(name = "ponumber", referencedColumnName = "ponumber")
     @ManyToOne(optional = false)
     private Poheader ponumber;

@@ -33,9 +33,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  * @author DheerajSingh
  */
 @Entity
-//@Table(name = "grn", catalog = "sltkeproc", schema = "")
-@Table(name = "grn", catalog = "sltk_eprocurment", schema = "")
-@JsonIgnoreProperties("inspection")
+@Table(name = "grn", catalog = "sltkeproc", schema = "")
+//@Table(name = "grn", catalog = "sltk_eprocurment", schema = "")
+
 @NamedQueries({
     @NamedQuery(name = "Grn.findAll", query = "SELECT g FROM Grn g"),
     @NamedQuery(name = "Grn.findByGrnnumber", query = "SELECT g FROM Grn g WHERE g.grnnumber = :grnnumber"),
@@ -59,19 +59,24 @@ public class Grn implements Serializable {
     private String grncreatedby;
     
     @Column(name = "grn_created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date grncreateddate;
+    //@Temporal(TemporalType.TIMESTAMP)
+    private String grncreateddate;
     
     @Column(name = "grn_posting_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date grnpostingdate;
+    //@Temporal(TemporalType.TIMESTAMP)
+    private String grnpostingdate;
     
-    @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grnnumber",fetch = FetchType.LAZY)
+    //@JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grnnumber")
     private List<Grndetails> grndetailslist;
 
     public Grn() {
     }
+    
+    public Grn(String grnnumber) {
+        this.grnnumber = Long.parseLong(grnnumber);
+    }
+
 
     public Grn(Long grnnumber) {
         this.grnnumber = grnnumber;
@@ -101,19 +106,19 @@ public class Grn implements Serializable {
         this.grncreatedby = grncreatedby;
     }
 
-    public Date getGrncreateddate() {
+    public String getGrncreateddate() {
         return grncreateddate;
     }
 
-    public void setGrncreateddate(Date grncreateddate) {
+    public void setGrncreateddate(String grncreateddate) {
         this.grncreateddate = grncreateddate;
     }
 
-    public Date getGrnpostingdate() {
+    public String getGrnpostingdate() {
         return grnpostingdate;
     }
 
-    public void setGrnpostingdate(Date grnpostingdate) {
+    public void setGrnpostingdate(String grnpostingdate) {
         this.grnpostingdate = grnpostingdate;
     }
 
@@ -145,9 +150,13 @@ public class Grn implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.javatechie.spring.mysql.api.model.Grn[ grnnumber=" + grnnumber + " ]";
-    }
+	@Override
+	public String toString() {
+		return "Grn [grnnumber=" + grnnumber + ", ponumber=" + ponumber + ", grncreatedby=" + grncreatedby
+				+ ", grncreateddate=" + grncreateddate + ", grnpostingdate=" + grnpostingdate + ", grndetailslist="
+				+ grndetailslist + "]";
+	}
+
+    
     
 }

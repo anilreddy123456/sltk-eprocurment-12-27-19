@@ -42,7 +42,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 //@Table(name = "asnheader", catalog = "sltkeproc", schema = "")
 @Table(name = "asnheader", catalog = "sltk_eprocurment", schema = "")
-@JsonIgnoreProperties("inspection")
+
 @NamedQueries({
     @NamedQuery(name = "Asnheader.findAll", query = "SELECT a FROM Asnheader a"),
     @NamedQuery(name = "Asnheader.findByAsnid", query = "SELECT a FROM Asnheader a WHERE a.asnid = :asnid"),
@@ -101,12 +101,11 @@ public class Asnheader implements Serializable {
     @Size(max = 255)
     @Column(name = "shipping_address")
     private String shippingaddress;
-    
-    @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asnid",fetch = FetchType.LAZY)
+ 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asnid")
     private List<Asndetails> asndetailslist;
     
-    @JsonBackReference
+   
     @JoinColumn(name = "ponumber", referencedColumnName = "ponumber")
     @ManyToOne(optional = false)
     private Poheader poheader;

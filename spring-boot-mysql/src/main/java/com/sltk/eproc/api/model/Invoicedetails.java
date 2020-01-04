@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 //@Table(name = "invoicedetails", catalog = "sltkeproc", schema = "")
 @Table(name = "invoicedetails", catalog = "sltk_eprocurment", schema = "")
-@JsonIgnoreProperties("inspection")
+
 @NamedQueries({
     @NamedQuery(name = "Invoicedetails.findAll", query = "SELECT i FROM Invoicedetails i"),
     @NamedQuery(name = "Invoicedetails.findByInvdetailid", query = "SELECT i FROM Invoicedetails i WHERE i.invdetailid = :invdetailid"),
@@ -59,12 +59,12 @@ public class Invoicedetails implements Serializable {
     @Column(name = "inv_amount")
     private BigDecimal invamount;
     
-    @JsonBackReference
+
     @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
     @ManyToOne(optional = false)
     private Invoices invoiceid;
     
-    @JsonBackReference
+
     @JoinColumn(name = "ponumber", referencedColumnName = "ponumber")
     @ManyToOne(optional = false)
     private Poheader ponumberinvoice;

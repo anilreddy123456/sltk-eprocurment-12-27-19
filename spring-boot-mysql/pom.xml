@@ -43,11 +43,13 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			
 		</dependency>
+
 
 		<dependency>
 			<groupId>mysql</groupId>

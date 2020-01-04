@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sltk.eproc.api.dao.HeaderDao;
 import com.sltk.eproc.api.dao.PoheaderDao;
 import com.sltk.eproc.api.dao.PolineitemsDao;
-import com.sltk.eproc.api.entity.Poheader;
-import com.sltk.eproc.api.entity.Polineitems;
 
+import com.sltk.eproc.api.entity.Polineitems;
+import com.sltk.eproc.api.model.Poheader;
 
 import javassist.NotFoundException;
 
@@ -40,7 +40,7 @@ public class PoheaderController {
 	private HeaderDao headerdao;
 	
 
-	//@GetMapping("/getall")
+	
 	@RequestMapping(value="/getall",method=RequestMethod.GET)
 	@Transactional
 	public List<Poheader> getAllHeader() {
@@ -52,7 +52,7 @@ public class PoheaderController {
 
 	
 	
-	//@GetMapping("/get/{id}")
+	
 	@RequestMapping(value="/get/{id}",method=RequestMethod.GET)
 	public Poheader getHeaderByID(@PathVariable Long id) throws NotFoundException {
 		Optional<Poheader> optHeader = poheaderDao.findById(id);
@@ -63,66 +63,11 @@ public class PoheaderController {
 		}
 	}
 
-	//@PostMapping("/save")
 	@RequestMapping(value="/save",method=RequestMethod.POST)
 	public String createHeader(@Valid @RequestBody List<Poheader> header) throws ParseException  {
 				
 		System.out.println(header.toString());
-	
-		/*
-		 * Poheader poheader = new Poheader(); List<Poheader> poheadersList = new
-		 * ArrayList<Poheader>();
-		 * 
-		 * List<Polineitems> polineitemsList = new ArrayList<Polineitems>();
-		 * List<PolineitemsHelper> lineitems= new ArrayList<PolineitemsHelper>();
-		 * 
-		 * for (PolineitemsHelper polineitemshelper : lineitems) { Polineitems
-		 * polineitems = new Polineitems();
-		 * 
-		 * polineitems.setAsnstatus(polineitemshelper.getAsnstatus());
-		 * polineitems.setPolineid(Integer.parseInt(polineitemshelper.getPolineid()));
-		 * polineitems.setItemtype(polineitemshelper.getItemtype());
-		 * polineitems.setMaterialnumber(polineitemshelper.getMaterialnumber());
-		 * polineitems.setDescription(polineitemshelper.getDescription());
-		 * polineitems.setPlant(polineitemshelper.getPlant());
-		 * polineitems.setMaterialcatagory(polineitemshelper.getMaterialcatagory());
-		 * polineitems.setOrderquantity(Integer.parseInt(polineitemshelper.
-		 * getOrderquantity())); polineitems.setUom(polineitemshelper.getUom());
-		 * polineitems.setGrossvalue(new BigDecimal(polineitemshelper.getGrossvalue()));
-		 * polineitems.setNetvalue(new BigDecimal(polineitemshelper.getNetvalue()));
-		 * polineitems.setBalanceasnqty(new
-		 * BigDecimal(polineitemshelper.getBalanceasnqty()));
-		 * polineitems.setPreviousasnqty(new
-		 * BigDecimal(polineitemshelper.getPreviousasnqty()));
-		 * 
-		 * // polineitems.setPonumber(polineitemshelper.getPonumber());
-		 * polineitemsList.add(polineitems); }
-		 * 
-		 * for (PoheaderHelper poheaderhelper : header) {
-		 * 
-		 * poheader.setPonumber(Long.parseLong(poheaderhelper.getPonumber()));
-		 * poheader.setVendorsapcode(poheaderhelper.getVendorsapcode());
-		 * poheader.setDescription(poheaderhelper.getDescription());
-		 * poheader.setPotype(poheaderhelper.getPotype());
-		 * poheader.setPurchaser(poheaderhelper.getPurchaser());
-		 * poheader.setDuedate(poheaderhelper.getDuedate()); poheader.setNetvalue(new
-		 * BigDecimal(poheaderhelper.getNetvalue())); poheader.setTaxvalue(new
-		 * BigDecimal(poheaderhelper.getTaxvalue())); poheader.setGrossvalue(new
-		 * BigDecimal(poheaderhelper.getGrossvalue()));
-		 * poheader.setCurrency(poheaderhelper.getCurrency());
-		 * poheader.setCreatedby(poheaderhelper.getCreatedby());
-		 * poheader.setCreateddate(poheaderhelper.getCreateddate());
-		 * poheader.setLastmodifiedby(poheaderhelper.getLastmodifiedby());
-		 * poheader.setLastmodifieddate(poheaderhelper.getLastmodifieddate());
-		 * 
-		 * poheader.setPolineitemslist(polineitemsList);
-		 * 
-		 * poheadersList.add(poheader);
-		 * 
-		 * }
-		 */
-		poheaderDao.saveAll(header);
-		//polineitemsDao.saveAll(polineitemsList);  	 			
+		poheaderDao.saveAll(header);	 			
 			System.out.println(header.toString());
 			
 		return "sucessfull";
@@ -183,6 +128,7 @@ public class PoheaderController {
 		}).orElseThrow(() -> new NotFoundException("Header not found with id " + id));
 	}
 
+	
 	//@DeleteMapping("/delete/{id}")
 	@RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
 	public String deleteHeader(@PathVariable Long id) throws NotFoundException {
@@ -193,6 +139,34 @@ public class PoheaderController {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
  * @Autowired private POItemDao pOItemDao;
@@ -242,6 +216,59 @@ public class PoheaderController {
  * System.out.println(header2.toString());
  * 
  * return "sucessfull";
+ * 
+ * }
+ */
+
+/*
+ * Poheader poheader = new Poheader(); List<Poheader> poheadersList = new
+ * ArrayList<Poheader>();
+ * 
+ * List<Polineitems> polineitemsList = new ArrayList<Polineitems>();
+ * List<PolineitemsHelper> lineitems= new ArrayList<PolineitemsHelper>();
+ * 
+ * for (PolineitemsHelper polineitemshelper : lineitems) { Polineitems
+ * polineitems = new Polineitems();
+ * 
+ * polineitems.setAsnstatus(polineitemshelper.getAsnstatus());
+ * polineitems.setPolineid(Integer.parseInt(polineitemshelper.getPolineid()));
+ * polineitems.setItemtype(polineitemshelper.getItemtype());
+ * polineitems.setMaterialnumber(polineitemshelper.getMaterialnumber());
+ * polineitems.setDescription(polineitemshelper.getDescription());
+ * polineitems.setPlant(polineitemshelper.getPlant());
+ * polineitems.setMaterialcatagory(polineitemshelper.getMaterialcatagory());
+ * polineitems.setOrderquantity(Integer.parseInt(polineitemshelper.
+ * getOrderquantity())); polineitems.setUom(polineitemshelper.getUom());
+ * polineitems.setGrossvalue(new BigDecimal(polineitemshelper.getGrossvalue()));
+ * polineitems.setNetvalue(new BigDecimal(polineitemshelper.getNetvalue()));
+ * polineitems.setBalanceasnqty(new
+ * BigDecimal(polineitemshelper.getBalanceasnqty()));
+ * polineitems.setPreviousasnqty(new
+ * BigDecimal(polineitemshelper.getPreviousasnqty()));
+ * 
+ * // polineitems.setPonumber(polineitemshelper.getPonumber());
+ * polineitemsList.add(polineitems); }
+ * 
+ * for (PoheaderHelper poheaderhelper : header) {
+ * 
+ * poheader.setPonumber(Long.parseLong(poheaderhelper.getPonumber()));
+ * poheader.setVendorsapcode(poheaderhelper.getVendorsapcode());
+ * poheader.setDescription(poheaderhelper.getDescription());
+ * poheader.setPotype(poheaderhelper.getPotype());
+ * poheader.setPurchaser(poheaderhelper.getPurchaser());
+ * poheader.setDuedate(poheaderhelper.getDuedate()); poheader.setNetvalue(new
+ * BigDecimal(poheaderhelper.getNetvalue())); poheader.setTaxvalue(new
+ * BigDecimal(poheaderhelper.getTaxvalue())); poheader.setGrossvalue(new
+ * BigDecimal(poheaderhelper.getGrossvalue()));
+ * poheader.setCurrency(poheaderhelper.getCurrency());
+ * poheader.setCreatedby(poheaderhelper.getCreatedby());
+ * poheader.setCreateddate(poheaderhelper.getCreateddate());
+ * poheader.setLastmodifiedby(poheaderhelper.getLastmodifiedby());
+ * poheader.setLastmodifieddate(poheaderhelper.getLastmodifieddate());
+ * 
+ * poheader.setPolineitemslist(polineitemsList);
+ * 
+ * poheadersList.add(poheader);
  * 
  * }
  */

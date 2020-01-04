@@ -116,32 +116,31 @@ public class Poheader implements Serializable {
    // @Temporal(TemporalType.TIMESTAMP)
     private String lastmodifieddate;
     
-    @JsonBackReference
+
     @JoinColumn(name = "comp_id", referencedColumnName = "comp_id")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Company compid;
     
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ponumber", cascade = CascadeType.ALL)
+ 
+    @OneToMany(mappedBy = "ponumber", cascade = CascadeType.ALL)
     private List<Polineitems> polineitemslist;
 
-	
-	  @JsonManagedReference
 	  
-	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "ponumberinvoice",fetch =
-	  FetchType.LAZY) private List<Invoicedetails> invoicedetailslist;
+	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "ponumberinvoice")
+	  private List<Invoicedetails> invoicedetailslist;	  
+
 	  
-	  @JsonManagedReference
-	  
-	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "poheaderasn",fetch =
-	  FetchType.LAZY) private List<Asndetails> asndetailslist;
-	  
-	  @JsonManagedReference
-	  
-	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "poheader",fetch =
-	  FetchType.LAZY) private List<Asnheader> asnheaderlist;
+	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "poheaderasn")
+	  private List<Asndetails> asndetailslist;
+
+	     
+	  @OneToMany(cascade = CascadeType.ALL, mappedBy = "poheader") 
+	  private List<Asnheader> asnheaderlist;
 	 
     public Poheader() {
+    }
+    public Poheader(String ponumber) {
+        this.ponumber =Long.parseLong(ponumber) ;
     }
 
     public Poheader(Long ponumber) {

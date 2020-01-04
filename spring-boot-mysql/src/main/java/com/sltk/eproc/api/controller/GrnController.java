@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sltk.eproc.api.dao.GrnDao;
-import com.sltk.eproc.api.entity.Grn;
+import com.sltk.eproc.api.model.Grn;
+
 
 @RestController
 @RequestMapping("/grn")
@@ -30,7 +31,6 @@ public class GrnController {
 		List<Grn> grn = (List<Grn>) grnDao.findAll();
 		return grn;
 	}
-
 	
 	@RequestMapping(value="/save",method=RequestMethod.POST)
 	public String createHeader(@Valid @RequestBody List<Grn> grn) throws ParseException  {
@@ -39,6 +39,7 @@ public class GrnController {
 		
 		grnDao.saveAll(grn);
 		
+		System.out.println(grn.toString());
 		return "grn created";
 	
 	}

@@ -54,7 +54,7 @@ public class Grndetails implements Serializable {
     @Column(name = "bill_of_lading")
     private String billoflading;
     
-    @JsonBackReference
+  
     @JoinColumn(name = "grn_number", referencedColumnName = "grn_number")
     @ManyToOne(optional = false)
     private Grn grnnumber;
