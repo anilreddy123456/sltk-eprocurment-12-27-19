@@ -35,4 +35,6 @@ C:\Users\SLTDTP04\git\sltk-eprocurment-12-27-19\spring-boot-mysql\src\main\java\
 C:\Users\SLTDTP04\git\sltk-eprocurment-12-27-19\spring-boot-mysql\src\main\java\com\sltk\eproc\api\model\Company.java
 C:\Users\SLTDTP04\git\sltk-eprocurment-12-27-19\spring-boot-mysql\src\main\java\com\sltk\eproc\api\model\Grn.java
 C:\Users\SLTDTP04\git\sltk-eprocurment-12-27-19\spring-boot-mysql\src\main\java\com\sltk\eproc\api\model\Poheader.java
+C:\Users\SLTDTP04\git\sltk-eprocurment-12-27-19\spring-boot-mysql\src\main\java\com\sltk\eproc\api\helperformodel\GrnSapEntity.java
+C:\Users\SLTDTP04\git\sltk-eprocurment-12-27-19\spring-boot-mysql\src\main\java\com\sltk\eproc\api\helperformodel\GrnDetailSapEntity.java
 C:\Users\SLTDTP04\git\sltk-eprocurment-12-27-19\spring-boot-mysql\src\main\java\com\sltk\eproc\api\model\Grndetails.java

@@ -69,6 +69,10 @@ public class Invoicedetails implements Serializable {
     @ManyToOne(optional = false)
     private Poheader ponumberinvoice;
 
+    @JoinColumn(name = "grn_number", referencedColumnName = "grn_number")
+    @ManyToOne(optional = false)
+    private Grn grnnumber;
+
     public Invoicedetails() {
     }
 
@@ -149,9 +153,10 @@ public class Invoicedetails implements Serializable {
         return true;
     }
 
-	
-	  @Override public String toString() { return
-	  "com.javatechie.spring.mysql.api.model.Invoicedetails[ invdetailid=" + invdetailid + " ]"; }
-	 
+	/*
+	 * @Override public String toString() { return
+	 * "com.javatechie.spring.mysql.api.model.Invoicedetails[ invdetailid=" +
+	 * invdetailid + " ]"; }
+	 */
     
 }

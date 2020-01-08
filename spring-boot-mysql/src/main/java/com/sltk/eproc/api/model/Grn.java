@@ -1,11 +1,9 @@
-package com.sltk.eproc.api.model;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package com.sltk.eproc.api.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,8 +12,9 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,138 +24,157 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 /**
  *
  * @author DheerajSingh
  */
+
 @Entity
 @Table(name = "grn", catalog = "sltkeproc", schema = "")
-//@Table(name = "grn", catalog = "sltk_eprocurment", schema = "")
-
-@NamedQueries({
-    @NamedQuery(name = "Grn.findAll", query = "SELECT g FROM Grn g"),
-    @NamedQuery(name = "Grn.findByGrnnumber", query = "SELECT g FROM Grn g WHERE g.grnnumber = :grnnumber"),
-    @NamedQuery(name = "Grn.findByPonumber", query = "SELECT g FROM Grn g WHERE g.ponumber = :ponumber"),
-    @NamedQuery(name = "Grn.findByGrncreatedby", query = "SELECT g FROM Grn g WHERE g.grncreatedby = :grncreatedby"),
-    @NamedQuery(name = "Grn.findByGrncreateddate", query = "SELECT g FROM Grn g WHERE g.grncreateddate = :grncreateddate"),
-    @NamedQuery(name = "Grn.findByGrnpostingdate", query = "SELECT g FROM Grn g WHERE g.grnpostingdate = :grnpostingdate")})
+@NamedQueries({ @NamedQuery(name = "Grn.findAll", query = "SELECT g FROM Grn g"),
+		@NamedQuery(name = "Grn.findByGrnnumber", query = "SELECT g FROM Grn g WHERE g.grnnumber = :grnnumber"),
+		@NamedQuery(name = "Grn.findByPonumber", query = "SELECT g FROM Grn g WHERE g.ponumber = :ponumber"),
+		@NamedQuery(name = "Grn.findByGrncreatedby", query = "SELECT g FROM Grn g WHERE g.grncreatedby = :grnCreatedBy"),
+		@NamedQuery(name = "Grn.findByGrncreateddate", query = "SELECT g FROM Grn g WHERE g.grncreateddate = :grncreateddate"),
+		@NamedQuery(name = "Grn.findByGrnpostingdate", query = "SELECT g FROM Grn g WHERE g.grnpostingdate = :grnpostingdate") })
 public class Grn implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "grn_number")
-    private Long grnnumber;
-    @Size(max = 250)
-    @Column(name = "ponumber")
-    private String ponumber;
-    @Size(max = 250)
-    @Column(name = "grn_created_by")
-    private String grncreatedby;
-    
-    @Column(name = "grn_created_date")
-    //@Temporal(TemporalType.TIMESTAMP)
-    private String grncreateddate;
-    
-    @Column(name = "grn_posting_date")
-    //@Temporal(TemporalType.TIMESTAMP)
-    private String grnpostingdate;
-    
-    //@JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grnnumber")
-    private List<Grndetails> grndetailslist;
+	private static final long serialVersionUID = 1L;
 
-    public Grn() {
-    }
-    
-    public Grn(String grnnumber) {
-        this.grnnumber = Long.parseLong(grnnumber);
-    }
+	@Id
+	@Basic(optional = false)
+	@NotNull
+	@Column(name = "grn_number")
+	private String grnnumber;
 
+	@Size(max = 250)
+	@Column(name = "grn_created_by")
+	private String grncreatedby;
 
-    public Grn(Long grnnumber) {
-        this.grnnumber = grnnumber;
-    }
+	@Column(name = "grn_created_date")
+	// @Temporal(TemporalType.TIMESTAMP)
+	private String grncreateddate;
 
-    public Long getGrnnumber() {
-        return grnnumber;
-    }
+	@Column(name = "grn_posting_date")
+	// @Temporal(TemporalType.TIMESTAMP)
+	private String grnpostingdate;
 
-    public void setGrnnumber(Long grnnumber) {
-        this.grnnumber = grnnumber;
-    }
+	@Column(name = "ponumber")
+	private String ponumber;
 
-    public String getPonumber() {
-        return ponumber;
-    }
+	/*
+	 * @JoinColumn(name = "ponumber", referencedColumnName = "ponumber")
+	 * 
+	 * @ManyToOne(cascade = CascadeType.ALL,optional = false) private Poheader
+	 * ponumber;
+	 */
 
-    public void setPonumber(String ponumber) {
-        this.ponumber = ponumber;
-    }
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "grnnumber")
+	private List<Grndetails> grndetailslist;
 
-    public String getGrncreatedby() {
-        return grncreatedby;
-    }
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "grnnumber")
+	private List<Invoicedetails> invoicedetailslist;
 
-    public void setGrncreatedby(String grncreatedby) {
-        this.grncreatedby = grncreatedby;
-    }
+	public Grn() {
+	}
 
-    public String getGrncreateddate() {
-        return grncreateddate;
-    }
+	public Grn(String grnnumber) {
+		this.grnnumber = grnnumber;
+	}
 
-    public void setGrncreateddate(String grncreateddate) {
-        this.grncreateddate = grncreateddate;
-    }
+	public String getGrnnumber() {
+		return grnnumber;
+	}
 
-    public String getGrnpostingdate() {
-        return grnpostingdate;
-    }
+	public void setGrnnumber(String grnnumber) {
+		this.grnnumber = grnnumber;
+	}
 
-    public void setGrnpostingdate(String grnpostingdate) {
-        this.grnpostingdate = grnpostingdate;
-    }
+	public String getGrncreatedby() {
+		return grncreatedby;
+	}
 
-    public List<Grndetails> getGrndetailslist() {
-        return grndetailslist;
-    }
+	public void setGrncreatedby(String grncreatedby) {
+		this.grncreatedby = grncreatedby;
+	}
 
-    public void setGrndetailslist(List<Grndetails> grndetailslist) {
-        this.grndetailslist = grndetailslist;
-    }
+	public String getGrncreateddate() {
+		return grncreateddate;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (grnnumber != null ? grnnumber.hashCode() : 0);
-        return hash;
-    }
+	public void setGrncreateddate(String grncreateddate) {
+		this.grncreateddate = grncreateddate;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Grn)) {
-            return false;
-        }
-        Grn other = (Grn) object;
-        if ((this.grnnumber == null && other.grnnumber != null) || (this.grnnumber != null && !this.grnnumber.equals(other.grnnumber))) {
-            return false;
-        }
-        return true;
-    }
+	public String getGrnpostingdate() {
+		return grnpostingdate;
+	}
+
+	public void setGrnpostingdate(String grnpostingdate) {
+		this.grnpostingdate = grnpostingdate;
+	}
+
+	/*
+	 * public Poheader getPonumber() { return ponumber; }
+	 * 
+	 * public void setPonumber(Poheader ponumber) { this.ponumber = ponumber; }
+	 */
+
+	public List<Grndetails> getGrndetailslist() {
+		return grndetailslist;
+	}
+
+	public void setGrndetailslist(List<Grndetails> grndetailslist) {
+		this.grndetailslist = grndetailslist;
+	}
+
+	public List<Invoicedetails> getInvoicedetailslist() {
+		return invoicedetailslist;
+	}
+
+	public void setInvoicedetailslist(List<Invoicedetails> invoicedetailslist) {
+		this.invoicedetailslist = invoicedetailslist;
+	}
+
+	public String getPonumber() {
+		return ponumber;
+	}
+
+	public void setPonumber(String ponumber) {
+		this.ponumber = ponumber;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (grnnumber != null ? grnnumber.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof Grn)) {
+			return false;
+		}
+		Grn other = (Grn) object;
+		if ((this.grnnumber == null && other.grnnumber != null)
+				|| (this.grnnumber != null && !this.grnnumber.equals(other.grnnumber))) {
+			return false;
+		}
+		return true;
+	}
 
 	@Override
 	public String toString() {
-		return "Grn [grnnumber=" + grnnumber + ", ponumber=" + ponumber + ", grncreatedby=" + grncreatedby
-				+ ", grncreateddate=" + grncreateddate + ", grnpostingdate=" + grnpostingdate + ", grndetailslist="
-				+ grndetailslist + "]";
+		return "Grn [grnnumber=" + grnnumber + ", grncreatedby=" + grncreatedby + ", grncreateddate=" + grncreateddate
+				+ ", grnpostingdate=" + grnpostingdate + ", ponumber=" + ponumber + ", grndetailslist=" + grndetailslist
+				+ ", invoicedetailslist=" + invoicedetailslist + "]";
 	}
 
-    
-    
+	/*
+	 * @Override public String toString() { return
+	 * "com.sltk.app.entity.Grn[ grnnumber=" + grnnumber + " ]"; }
+	 */
+
 }

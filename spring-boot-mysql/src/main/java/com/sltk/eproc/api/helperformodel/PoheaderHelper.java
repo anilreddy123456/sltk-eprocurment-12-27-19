@@ -95,6 +95,10 @@ public class PoheaderHelper implements Serializable {
     public PoheaderHelper(String ponumber) {
         this.ponumber = ponumber;
     }
+    
+    public PoheaderHelper(Long ponumber) {
+        this.ponumber = String.valueOf(ponumber);
+    }
 
     public String getPonumber() {
         return ponumber;

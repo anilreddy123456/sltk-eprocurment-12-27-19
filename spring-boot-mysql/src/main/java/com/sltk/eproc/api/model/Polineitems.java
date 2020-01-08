@@ -7,7 +7,10 @@ package com.sltk.eproc.api.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -56,7 +60,7 @@ public class Polineitems implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "line_id")
-    private Integer lineid;
+    private Long lineid;
     
     @Size(max = 2)
     @Column(name = "asn_status")
@@ -111,24 +115,32 @@ public class Polineitems implements Serializable {
     @JoinColumn(name = "ponumber", referencedColumnName = "ponumber")
     @ManyToOne(optional = false)
     private Poheader ponumber;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lineid")
+    private List<Grndetails> grndetailslist;
+    
 
     public Polineitems() {
     }
+    
+    public Polineitems(String lineid) {
+        this.lineid = Long.parseLong(lineid);
+    }
 
-    public Polineitems(Integer lineid) {
+    public Polineitems(Long lineid) {
         this.lineid = lineid;
     }
 
-    public Polineitems(Integer lineid, int polineid) {
+    public Polineitems(Long lineid, int polineid) {
         this.lineid = lineid;
         this.polineid = polineid;
     }
 
-    public Integer getLineid() {
+    public Long getLineid() {
         return lineid;
     }
 
-    public void setLineid(Integer lineid) {
+    public void setLineid(Long lineid) {
         this.lineid = lineid;
     }
 
@@ -225,6 +237,9 @@ public class Polineitems implements Serializable {
     }
 
     public void setBalanceasnqty(BigDecimal balanceasnqty) {
+		/*
+		 * if(balanceasnqty==null) { balanceasnqty=new BigDecimal(orderquantity); }
+		 */
         this.balanceasnqty = balanceasnqty;
     }
 
@@ -243,8 +258,18 @@ public class Polineitems implements Serializable {
     public void setPonumber(Poheader ponumber) {
         this.ponumber = ponumber;
     }
+    
+    
 
-    @Override
+    public List<Grndetails> getGrndetailslist() {
+		return grndetailslist;
+	}
+
+	public void setGrndetailslist(List<Grndetails> grndetailslist) {
+		this.grndetailslist = grndetailslist;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (lineid != null ? lineid.hashCode() : 0);

@@ -1,5 +1,6 @@
 package com.sltk.eproc.api.controller;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,10 @@ import com.sltk.eproc.api.dao.HeaderDao;
 import com.sltk.eproc.api.dao.PoheaderDao;
 import com.sltk.eproc.api.dao.PolineitemsDao;
 
-import com.sltk.eproc.api.entity.Polineitems;
+
+import com.sltk.eproc.api.helperformodel.PolineitemsHelper;
 import com.sltk.eproc.api.model.Poheader;
+import com.sltk.eproc.api.model.Polineitems;
 
 import javassist.NotFoundException;
 
@@ -67,6 +70,17 @@ public class PoheaderController {
 	public String createHeader(@Valid @RequestBody List<Poheader> header) throws ParseException  {
 				
 		System.out.println(header.toString());
+		for (Poheader poheader : header) {
+			List<Polineitems> items=poheader.getPolineitemslist();
+			
+			for (Polineitems polineitems : items) {
+				Integer orderQty= polineitems.getOrderquantity();
+				polineitems.setBalanceasnqty(new BigDecimal(orderQty));
+				polineitems.setPreviousasnqty(new BigDecimal(0));
+				polineitems.setGrossvalue(polineitems.getNetvalue().multiply(new BigDecimal(orderQty)));
+						
+			}
+		}				
 		poheaderDao.saveAll(header);	 			
 			System.out.println(header.toString());
 			
@@ -77,58 +91,52 @@ public class PoheaderController {
 	
 	
 	@PutMapping("/update/{id}")
-	public String updateheader(@RequestBody Long id, @Valid @RequestBody List<Poheader> headerDetails) throws NotFoundException {
+	public String updateheader(@RequestBody Long id, @Valid @RequestBody Poheader headerDetails) throws NotFoundException {
 		
 		 List<Polineitems> itemsupdate = new ArrayList<Polineitems>();
 		  
 		return poheaderDao.findById(id).map(header -> {
 			
-			/*
-			 * header.setVendorsapcode(headerDetails.getVendorsapcode());
-			 * header.setDescription(headerDetails.getDescription());
-			 * header.setPotype(headerDetails.getPotype());
-			 * header.setPurchaser(headerDetails.getPurchaser());
-			 * header.setDuedate(headerDetails.getDuedate());
-			 * header.setNetvalue(headerDetails.getNetvalue());
-			 * header.setTaxvalue(headerDetails.getTaxvalue());
-			 * header.setGrossvalue(headerDetails.getGrossvalue());
-			 * header.setCurrency(headerDetails.getCurrency());
-			 * header.setCreatedby(headerDetails.getCreatedby());
-			 * header.setCreateddate(headerDetails.getCreateddate());
-			 * header.setLastmodifiedby(headerDetails.getLastmodifiedby());
-			 * header.setLastmodifieddate(headerDetails.getLastmodifieddate());
-			 * 
-			 * header.setPoitem(itemsupdate);
-			 * 
-			 * for (POItem poitem : itemsupdate) { POItem items= new POItem();
-			 * 
-			 * items.setAsnstatus(poitem.getAsnstatus());
-			 * items.setPolineid(poitem.getPolineid());
-			 * items.setItemtype(poitem.getItemtype());
-			 * items.setMaterialnumber(poitem.getMaterialnumber());
-			 * items.setDescription(poitem.getDescription());
-			 * items.setPlant(poitem.getPlant());
-			 * items.setMaterialcatagory(poitem.getMaterialcatagory());
-			 * items.setOrderquantity(poitem.getOrderquantity());
-			 * items.setUom(poitem.getUom()); items.setGrossvalue(poitem.getGrossvalue());
-			 * items.setNetvalue(poitem.getNetvalue());
-			 * items.setBalanceasnqty(poitem.getBalanceasnqty());
-			 * items.setPreviousasnqty(poitem.getPreviousasnqty());
-			 * 
-			 * itemsupdate.add(items);
-			 * 
-			 * }
-			 */
-
-
+			  header.setVendorsapcode(headerDetails.getVendorsapcode());
+			  header.setDescription(headerDetails.getDescription());
+			  header.setPotype(headerDetails.getPotype());
+			  header.setPurchaser(headerDetails.getPurchaser());
+			  header.setDuedate(headerDetails.getDuedate());
+			  header.setNetvalue(headerDetails.getNetvalue());
+			  header.setTaxvalue(headerDetails.getTaxvalue());
+			  header.setGrossvalue(headerDetails.getGrossvalue());
+			  header.setCurrency(headerDetails.getCurrency());
+			  header.setCreatedby(headerDetails.getCreatedby());
+			  header.setCreateddate(headerDetails.getCreateddate());
+			  header.setLastmodifiedby(headerDetails.getLastmodifiedby());
+			  header.setLastmodifieddate(headerDetails.getLastmodifieddate());
+			  
+			  List<Polineitems> items= header.getPolineitemslist();
+			  
+			  for (Polineitems poitem : items) {
+				  Polineitems polineitems= new Polineitems();
+				  //poitem.setAsnstatus(poitem.getAsnstatus());
+				  polineitems.setAsnstatus(poitem.getAsnstatus());
+				  polineitems.setPolineid(poitem.getPolineid());
+				  polineitems.setItemtype(poitem.getItemtype());
+				  polineitems.setMaterialnumber(poitem.getMaterialnumber());
+				  polineitems.setDescription(poitem.getDescription());
+				  polineitems.setPlant(poitem.getPlant());
+				  polineitems.setMaterialcatagory(poitem.getMaterialcatagory());
+				  polineitems.setOrderquantity(poitem.getOrderquantity());
+				  polineitems.setUom(poitem.getUom());
+				  polineitems.setGrossvalue(poitem.getGrossvalue());
+				  polineitems.setNetvalue(poitem.getNetvalue());
+				  polineitems.setBalanceasnqty(poitem.getBalanceasnqty());
+				  polineitems.setPreviousasnqty(poitem.getPreviousasnqty()); 
+			 // itemsupdate.add(items);
+			  }
 			  
 			poheaderDao.flush();
 			return "updated";
 			//return headerdao.save(header);
 		}).orElseThrow(() -> new NotFoundException("Header not found with id " + id));
 	}
-
-	
 	//@DeleteMapping("/delete/{id}")
 	@RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
 	public String deleteHeader(@PathVariable Long id) throws NotFoundException {
