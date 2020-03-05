@@ -88,7 +88,7 @@ public class Polineitems implements Serializable {
     private String materialCatagory;
     
     @Column(name = "order_quantity")
-    private Integer orderQuantity;
+    private BigDecimal orderQuantity;
     
     @Size(max = 100)
     @Column(name = "uom")
@@ -113,6 +113,9 @@ public class Polineitems implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "line_id")
     private List<PolineItemTaxes> polineItemTaxes;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "line_id")
+    private List<PolineItemServices> polineItemServices;
     
     @JoinColumn(name = "ponumber", referencedColumnName = "ponumber")
     @ManyToOne(optional = false)
@@ -200,11 +203,11 @@ public class Polineitems implements Serializable {
         this.materialCatagory = materialCatagory;
     }
 
-    public Integer getOrderQuantity() {
+    public BigDecimal getOrderQuantity() {
         return orderQuantity;
     }
 
-    public void setOrderQuantity(Integer orderQuantity) {
+    public void setOrderQuantity(BigDecimal orderQuantity) {
         this.orderQuantity = orderQuantity;
     }
 
@@ -284,6 +287,14 @@ public class Polineitems implements Serializable {
 
 	public void setPolineItemTaxes(List<PolineItemTaxes> polineItemTaxes) {
 		this.polineItemTaxes = polineItemTaxes;
+	}
+	
+	public List<PolineItemServices> getPolineItemServices() {
+		return polineItemServices;
+	}
+
+	public void setPolineItemServices(List<PolineItemServices> polineItemServices) {
+		this.polineItemServices = polineItemServices;
 	}
 
 	@Override

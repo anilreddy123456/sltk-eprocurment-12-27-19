@@ -11,12 +11,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="polineitemtax")
+@NamedQueries({
+    @NamedQuery(name = "PolineItemTaxes.findAll", query = "SELECT p FROM PolineItemTaxes p"),
+    @NamedQuery(name = "PolineItemTaxes.findByTaxDetailId", query = "SELECT p FROM PolineItemTaxes p WHERE p.taxDetailId = :taxDetailId"),
+    @NamedQuery(name = "PolineItemTaxes.findByTaxDescription", query = "SELECT p FROM PolineItemTaxes p WHERE p.taxDescription = :taxDescription"),
+    @NamedQuery(name = "PolineItemTaxes.findByTaxRate", query = "SELECT p FROM PolineItemTaxes p WHERE p.taxRate = :taxRate")})
+    
 public class PolineItemTaxes implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

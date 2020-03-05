@@ -1,22 +1,13 @@
 package com.sltk.app.entity.sap;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/********************************************************************
-* @Class Name         : GrnSapEntity.java                                                                
-*                                                                                                                                        
-* @author             : Dheeraj Singh                                                                
-* @version            :                                                                        
-* @Creation Date      : 06-Jan-2020                                                                
-* @Last Modified By   : Dheeraj Singh                                                                
-* @Last Modified Date : 06-Jan-2020                                                                                
-*********************************************************************
-*    
-*********************************************************************
-*/
-public class GrnSapEntity
+public class GrnSapEntity implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+	
     private String grnnumber;
     private String ponumber;
     private String grncreatedby;

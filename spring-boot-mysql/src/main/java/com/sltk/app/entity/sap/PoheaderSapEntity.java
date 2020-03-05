@@ -50,6 +50,7 @@ public class PoheaderSapEntity implements Serializable {
     private String createddate;    
     private String lastmodifiedby;  
     private String lastmodifieddate;
+    private String pay_term;
     
     private List<PolineitemsSapEntity> polineitemslist = new ArrayList<PolineitemsSapEntity>();
        
@@ -188,6 +189,16 @@ public class PoheaderSapEntity implements Serializable {
 	}
 
 
+	public String getPay_term() {
+		return pay_term;
+	}
+
+
+	public void setPay_term(String pay_term) {
+		this.pay_term = pay_term;
+	}
+
+
 	public List<PolineitemsSapEntity> getPolineitemslist() {
 		return polineitemslist;
 	}
@@ -204,8 +215,9 @@ public class PoheaderSapEntity implements Serializable {
 				+ description + ", potype=" + potype + ", purchaser=" + purchaser + ", othercharges=" + othercharges
 				+ ", netvalue=" + netvalue + ", taxvalue=" + taxvalue + ", grossvalue=" + grossvalue + ", currency="
 				+ currency + ", createddate=" + createddate + ", lastmodifiedby=" + lastmodifiedby
-				+ ", lastmodifieddate=" + lastmodifieddate + ", polineitemslist=" + polineitemslist + "]";
+				+ ", lastmodifieddate=" + lastmodifieddate + ", polineitemslist="
+				+ polineitemslist + "]";
 	}
 	
-     
+	
 }
