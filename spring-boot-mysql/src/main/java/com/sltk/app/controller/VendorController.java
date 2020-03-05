@@ -76,10 +76,11 @@ public class VendorController {
 			vendorList.add(vendor);
 		}
 		
-		
+		System.out.println(vendorList.toString());
+		System.out.println(vendorList.size());
 		v_dao.saveAll(vendorList);
 		
-		System.out.println(vendorSapEntity.toString());
+		System.out.println(vendorList.toString());
 		
 		return "Rigistration sucessfully ";
 		

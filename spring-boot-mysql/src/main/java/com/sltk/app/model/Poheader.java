@@ -16,6 +16,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -45,7 +46,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Poheader.findByCurrency", query = "SELECT p FROM Poheader p WHERE p.currency = :currency"),
     @NamedQuery(name = "Poheader.findByCreatedDate", query = "SELECT p FROM Poheader p WHERE p.createdDate = :createdDate"),
     @NamedQuery(name = "Poheader.findByLastModifiedBy", query = "SELECT p FROM Poheader p WHERE p.lastModifiedBy = :lastModifiedBy"),
-    @NamedQuery(name = "Poheader.findByLastModifiedDate", query = "SELECT p FROM Poheader p WHERE p.lastModifiedDate = :lastModifiedDate")})
+    @NamedQuery(name = "Poheader.findByLastModifiedDate", query = "SELECT p FROM Poheader p WHERE p.lastModifiedDate = :lastModifiedDate"),
+    @NamedQuery(name = "Poheader.findByPayTerms", query = "SELECT p FROM Poheader p WHERE p.payTerms = :payTerms")})
 public class Poheader implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,7 +56,7 @@ public class Poheader implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ponumber")
-    private String ponumber;
+    private Long ponumber;
     
     @Column(name = "vendor_sap_code")
     private String vendorSapCode;
@@ -99,6 +101,9 @@ public class Poheader implements Serializable {
     @Column(name = "last_modified_date")
    // @Temporal(TemporalType.TIMESTAMP)
     private String lastModifiedDate;
+  
+    @Column(name ="pay_term")
+    private String payTerms;
     
     @JoinColumn(name = "comp_id", referencedColumnName = "comp_id")
     @ManyToOne
@@ -107,6 +112,7 @@ public class Poheader implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ponumber")
     private List<Invoicedetails> invoicedetailsList;
     
+   // @OneToMany(cascade = CascadeType.ALL, mappedBy = "ponumber")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ponumber")
     private List<Polineitems> polineitemsList;
     
@@ -127,15 +133,18 @@ public class Poheader implements Serializable {
     public Poheader() {
     }
 
-    public Poheader(String ponumber) {
+    public Poheader(Long ponumber) {
         this.ponumber = ponumber;
     }
+    public Poheader(String ponumber) {
+        this.ponumber = Long.parseLong(ponumber);
+    }
 
-    public String getPonumber() {
+    public Long getPonumber() {
         return ponumber;
     }
 
-    public void setPonumber(String ponumber) {
+    public void setPonumber(Long ponumber) {
         this.ponumber = ponumber;
     }
 
@@ -237,7 +246,15 @@ public class Poheader implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public Company getCompId() {
+    public String getPayTerms() {
+		return payTerms;
+	}
+
+	public void setPayTerms(String payTerms) {
+		this.payTerms = payTerms;
+	}
+
+	public Company getCompId() {
         return compId;
     }
 

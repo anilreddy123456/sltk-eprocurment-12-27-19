@@ -40,14 +40,14 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Invoices.findByInvoiceNumber", query = "SELECT i FROM Invoices i WHERE i.invoiceNumber = :invoiceNumber"),
     @NamedQuery(name = "Invoices.findByInvDate", query = "SELECT i FROM Invoices i WHERE i.invDate = :invDate"),
     @NamedQuery(name = "Invoices.findByInvAmount", query = "SELECT i FROM Invoices i WHERE i.invAmount = :invAmount"),
-    @NamedQuery(name = "Invoices.findByCgstPercentage", query = "SELECT i FROM Invoices i WHERE i.cgstPercentage = :cgstPercentage"),
-    @NamedQuery(name = "Invoices.findByCgstValue", query = "SELECT i FROM Invoices i WHERE i.cgstValue = :cgstValue"),
+    //@NamedQuery(name = "Invoices.findByCgstPercentage", query = "SELECT i FROM Invoices i WHERE i.cgstPercentage = :cgstPercentage"),
+   // @NamedQuery(name = "Invoices.findByCgstValue", query = "SELECT i FROM Invoices i WHERE i.cgstValue = :cgstValue"),
     @NamedQuery(name = "Invoices.findByFreight", query = "SELECT i FROM Invoices i WHERE i.freight = :freight"),
     @NamedQuery(name = "Invoices.findByOther", query = "SELECT i FROM Invoices i WHERE i.other = :other"),
-    @NamedQuery(name = "Invoices.findBySgstPercentage", query = "SELECT i FROM Invoices i WHERE i.sgstPercentage = :sgstPercentage"),
-    @NamedQuery(name = "Invoices.findBySgstValue", query = "SELECT i FROM Invoices i WHERE i.sgstValue = :sgstValue"),
-    @NamedQuery(name = "Invoices.findByIgstPercentage", query = "SELECT i FROM Invoices i WHERE i.igstPercentage = :igstPercentage"),
-    @NamedQuery(name = "Invoices.findByIgstValue", query = "SELECT i FROM Invoices i WHERE i.igstValue = :igstValue"),
+   // @NamedQuery(name = "Invoices.findBySgstPercentage", query = "SELECT i FROM Invoices i WHERE i.sgstPercentage = :sgstPercentage"),
+    //@NamedQuery(name = "Invoices.findBySgstValue", query = "SELECT i FROM Invoices i WHERE i.sgstValue = :sgstValue"),
+    //@NamedQuery(name = "Invoices.findByIgstPercentage", query = "SELECT i FROM Invoices i WHERE i.igstPercentage = :igstPercentage"),
+    //@NamedQuery(name = "Invoices.findByIgstValue", query = "SELECT i FROM Invoices i WHERE i.igstValue = :igstValue"),
     @NamedQuery(name = "Invoices.findByTotalInvAmount", query = "SELECT i FROM Invoices i WHERE i.totalInvAmount = :totalInvAmount"),
     @NamedQuery(name = "Invoices.findByRemarks", query = "SELECT i FROM Invoices i WHERE i.remarks = :remarks")})
 public class Invoices implements Serializable {
@@ -74,17 +74,26 @@ public class Invoices implements Serializable {
     @Column(name = "inv_amount")
     private BigDecimal invAmount;
     
-    @Column(name = "cgst_percentage")
-    private BigDecimal cgstPercentage;
-    
-    @Column(name = "cgst_value")
-    private BigDecimal cgstValue;
     
     @Column(name = "freight")
     private BigDecimal freight;
     
     @Column(name = "other")
     private BigDecimal other;
+    
+    @Column(name = "total_inv_amount")
+    private BigDecimal totalInvAmount;
+    
+    @Size(max = 2000)
+    @Column(name = "remarks")
+    private String remarks;
+    
+    /**
+    @Column(name = "cgst_percentage")
+    private BigDecimal cgstPercentage;
+    
+    @Column(name = "cgst_value")
+    private BigDecimal cgstValue;
     
     @Column(name = "sgst_percentage")
     private BigDecimal sgstPercentage;
@@ -98,12 +107,7 @@ public class Invoices implements Serializable {
     @Column(name = "igst_value")
     private BigDecimal igstValue;
     
-    @Column(name = "total_inv_amount")
-    private BigDecimal totalInvAmount;
-    
-    @Size(max = 2000)
-    @Column(name = "remarks")
-    private String remarks;
+   **/
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoiceId")
     private List<Invoicedetails> invoicedetailsList;
@@ -185,21 +189,6 @@ public class Invoices implements Serializable {
         this.invAmount = invAmount;
     }
 
-    public BigDecimal getCgstPercentage() {
-        return cgstPercentage;
-    }
-
-    public void setCgstPercentage(BigDecimal cgstPercentage) {
-        this.cgstPercentage = cgstPercentage;
-    }
-
-    public BigDecimal getCgstValue() {
-        return cgstValue;
-    }
-
-    public void setCgstValue(BigDecimal cgstValue) {
-        this.cgstValue = cgstValue;
-    }
 
     public BigDecimal getFreight() {
         return freight;
@@ -216,7 +205,23 @@ public class Invoices implements Serializable {
     public void setOther(BigDecimal other) {
         this.other = other;
     }
+/**
+    public BigDecimal getCgstPercentage() {
+        return cgstPercentage;
+    }
 
+    public void setCgstPercentage(BigDecimal cgstPercentage) {
+        this.cgstPercentage = cgstPercentage;
+    }
+
+    public BigDecimal getCgstValue() {
+        return cgstValue;
+    }
+
+    public void setCgstValue(BigDecimal cgstValue) {
+        this.cgstValue = cgstValue;
+    }
+    
     public BigDecimal getSgstPercentage() {
         return sgstPercentage;
     }
@@ -248,7 +253,7 @@ public class Invoices implements Serializable {
     public void setIgstValue(BigDecimal igstValue) {
         this.igstValue = igstValue;
     }
-
+**/
     public BigDecimal getTotalInvAmount() {
         return totalInvAmount;
     }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sltk.app.dao.GrnDao;
 import com.sltk.app.dao.GrnDetailsDao;
+import com.sltk.app.dao.PolineitemsDao;
 import com.sltk.app.entity.sap.GrnDetailSapEntity;
 import com.sltk.app.entity.sap.GrnSapEntity;
 import com.sltk.app.model.Grn;
@@ -31,6 +32,9 @@ public class GrnController {
 
 	@Autowired
 	private GrnDao grnDao;
+	
+	@Autowired
+	private PolineitemsDao poLineItemDAO;
 	
 	@Autowired
 	private GrnDetailsDao grndetailsdao;
@@ -58,9 +62,11 @@ public class GrnController {
 				
 		System.out.println(grn.toString());
 		List<Grn> grnlist=new ArrayList<Grn>();
-		List<Grndetails> grndetilalist= new ArrayList<Grndetails>();
+	
 		for (GrnSapEntity grnSapEntity : grn) {
 			Grn grn1= new  Grn();
+			Poheader header= new Poheader(grnSapEntity.getPonumber());
+			
 			grn1.setGrnNumber(grnSapEntity.getGrnnumber());
 			grn1.setGrnCreatedBy(grnSapEntity.getGrncreatedby());
 			//grn1.setGrnCreatedDate(new SimpleDateFormat().parse(grnSapEntity.getGrncreateddate()));
@@ -68,21 +74,26 @@ public class GrnController {
 			grn1.setGrnCreatedDate(grnSapEntity.getGrncreateddate());
 			grn1.setGrnPostingDate(grnSapEntity.getGrnpostingdate());
 			//grn1.setPonumber(new Poheader(grnSapEntity.getPonumber()));
-			grn1.setPonumber((grnSapEntity.getPonumber()));
-		
+			grn1.setPonumber(header);
+			List<Grndetails> grndetilalist= new ArrayList<Grndetails>();
 			List<GrnDetailSapEntity> grndetails = grnSapEntity.getGrndetailslist();
 			for (GrnDetailSapEntity grndetailsentity : grndetails) {
 				Grndetails grndetails1= new Grndetails();
+				Polineitems poLineItems = poLineItemDAO.getPoLineItems(Long.parseLong(grnSapEntity.getPonumber()), Integer.parseInt(grndetailsentity.getPo_line_id()));
 				grndetails1.setQuantity(new BigDecimal(grndetailsentity.getQuantity()));
 				grndetails1.setGrnMovementType(grndetailsentity.getGrnmovementtype());
 				grndetails1.setGrnNumber(new Grn(grndetailsentity.getGrnnumber()));
+				grndetails1.setPonumber(header);
 				grndetails1.setPlant(grndetailsentity.getPlant());
-				grndetails1.setLineId(new Polineitems(grndetailsentity.getLineid()));
+				grndetails1.setGrnItemId(grndetailsentity.getGrn_item_id());
+				grndetails1.setLineId(poLineItems);
+				//grndetails1.setLineId(Integer.parseInt(grndetailsentity.getLineid()));
+				grndetails1.setPoLineId(grndetailsentity.getPo_line_id());
 				grndetails1.setMatShortDesc(grndetailsentity.getMatshortdesc());
 				grndetilalist.add(grndetails1);
 			}			
 	        grn1.setGrndetailsList(grndetilalist);
-			grnlist.add(grn1);			
+			grnlist.add(grn1);		
 		}
            grnDao.saveAll(grnlist);	
            

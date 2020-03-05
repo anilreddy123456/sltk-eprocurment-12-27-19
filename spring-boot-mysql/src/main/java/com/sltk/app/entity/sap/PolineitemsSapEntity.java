@@ -48,197 +48,113 @@ public class PolineitemsSapEntity implements Serializable {
     private String ponumber;
    
 	private List<PolineTaxSapEntity> potax = new ArrayList<PolineTaxSapEntity>();
+	private List<PolineServiceSapEntity> poservice = new ArrayList<PolineServiceSapEntity>();
 
-    public PolineitemsSapEntity() {
-    
+    public PolineitemsSapEntity() {    
     }
-
 	public String getAsnstatus() {
 		return asnstatus;
 	}
-
-
-
 	public void setAsnstatus(String asnstatus) {
 		this.asnstatus = asnstatus;
 	}
-
-
-
 	public String getPolineid() {
 		return polineid;
 	}
-
-
-
 	public void setPolineid(String polineid) {
 		this.polineid = polineid;
 	}
-
-
-
 	public String getItemtype() {
 		return itemtype;
 	}
-
-
-
 	public void setItemtype(String itemtype) {
 		this.itemtype = itemtype;
 	}
-
-
-
 	public String getMaterialnumber() {
 		return materialnumber;
 	}
-
-
-
 	public void setMaterialnumber(String materialnumber) {
 		this.materialnumber = materialnumber;
 	}
-
-
-
 	public String getDescription() {
 		return description;
 	}
-
-
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
-
 	public String getPlant() {
 		return plant;
 	}
-
-
-
 	public void setPlant(String plant) {
 		this.plant = plant;
 	}
-
-
-
 	public String getMaterialcatagory() {
 		return materialcatagory;
 	}
-
-
-
 	public void setMaterialcatagory(String materialcatagory) {
 		this.materialcatagory = materialcatagory;
 	}
-
-
-
 	public String getOrderquantity() {
 		return orderquantity;
 	}
-
-
-
 	public void setOrderquantity(String orderquantity) {
 		this.orderquantity = orderquantity;
 	}
-
-
-
 	public String getUom() {
 		return uom;
 	}
-
-
-
 	public void setUom(String uom) {
 		this.uom = uom;
 	}
-
-
-
 	public String getGrossvalue() {
 		return grossvalue;
 	}
-
-
-
 	public void setGrossvalue(String grossvalue) {
 		this.grossvalue = grossvalue;
 	}
-
-
-
 	public String getNetvalue() {
 		return netvalue;
 	}
-
-
-
 	public void setNetvalue(String netvalue) {
 		this.netvalue = netvalue;
 	}
-
-
-
 	public String getBalanceasnqty() {
 		return balanceasnqty;
 	}
-
-
-
 	public void setBalanceasnqty(String balanceasnqty) {
 		this.balanceasnqty = balanceasnqty;
 	}
-
-
-
 	public String getPreviousasnqty() {
 		return previousasnqty;
 	}
-
-
-
 	public void setPreviousasnqty(String previousasnqty) {
 		this.previousasnqty = previousasnqty;
 	}
-
-
-
 	public String getTaxcode() {
 		return taxcode;
 	}
-
-
-
 	public void setTaxcode(String taxcode) {
 		this.taxcode = taxcode;
 	}
-
-
-
 	public String getPonumber() {
 		return ponumber;
 	}
-
-
-
 	public void setPonumber(String ponumber) {
 		this.ponumber = ponumber;
 	}
-
 	public List<PolineTaxSapEntity> getPotax() {
 		return potax;
 	}
-
 	public void setPotax(List<PolineTaxSapEntity> potax) {
 		this.potax = potax;
 	}
-
+	
+	public List<PolineServiceSapEntity> getPoservice() {
+		return poservice;
+	}
+	public void setPoservice(List<PolineServiceSapEntity> poservice) {
+		this.poservice = poservice;
+	}
 	@Override
 	public String toString() {
 		return "PolineitemsSapEntity [asnstatus=" + asnstatus + ", polineid=" + polineid + ", itemtype=" + itemtype
